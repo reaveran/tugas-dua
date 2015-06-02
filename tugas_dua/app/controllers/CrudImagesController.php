@@ -131,8 +131,8 @@ class CrudImagesController extends \BaseController {
 		    $validation = Validator::make($input, $rules);
 		    if ($validation->fails())
 			{
-			    return Redirect::to('crudimages/create')
-			    ->withErrors($validator)
+			    return Redirect::to('crudimages/'.$id.'/edit')
+			    ->withErrors($validation)
 			    ->withInput();
 			}else{
 				$oldPath = $file->getRealPath();
@@ -151,7 +151,7 @@ class CrudImagesController extends \BaseController {
 			    $crudimg->directory2 ='images2/'.$file->getClientOriginalName();
 	    		$crudimg->save();
 	    		Session::flash('notice', 'Success update image');
-		    	return Redirect::to('crudimages.index');
+		    	return Redirect::to('crudimages');
 			} 
 	    }
 	}
