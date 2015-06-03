@@ -13,7 +13,7 @@
 	<div class="form-group">
 	    {{Form::label('file', 'File', array('class' => 'col-lg-3 control-label'))}}
 	    <div class="col-lg-6">
-	    	{{Form::file('file','',array('class' => 'form-control', 'autofocus' => 'true'))}}
+	    	{{Form::file('directory','',array('class' => 'form-control', 'autofocus' => 'true'))}}
 	        {{$errors->first('upload')}}
 	    </div>
 	    <div class="clear"></div>

@@ -120,7 +120,8 @@ class CrudImagesController extends \BaseController {
 		     ->withErrors($validate)
 		     ->withInput();
 	    } else {
-	        $file = Input::file('file');
+	        $file = Input::file('directory');
+	        $crudimg = Crudimage::find($id);
 		    $input = array(
 		        'upload' => $file
 		    );
@@ -131,9 +132,7 @@ class CrudImagesController extends \BaseController {
 		    $validation = Validator::make($input, $rules);
 		    if ($validation->fails())
 			{
-			    return Redirect::to('crudimages/'.$id.'/edit')
-			    ->withErrors($validation)
-			    ->withInput();
+			    
 			}else{
 				$oldPath = $file->getRealPath();
 				$newPath = public_path('images/'.$file->getClientOriginalName());
@@ -144,15 +143,13 @@ class CrudImagesController extends \BaseController {
 			    $img2 = Image::make($oldPath);
 			    $img2->resize(600, 300);
 			    $img2->save($newPath2);
-
-			    $crudimg = Crudimage::find($id);
-			    $crudimg->title = Input::get('title');
 			    $crudimg->directory = 'images/'.$file->getClientOriginalName();
 			    $crudimg->directory2 ='images2/'.$file->getClientOriginalName();
-	    		$crudimg->save();
-	    		Session::flash('notice', 'Success update image');
-		    	return Redirect::to('crudimages');
 			} 
+			$crudimg->title = Input::get('title');
+			$crudimg->save();
+    		Session::flash('notice', 'Success update image');
+	    	return Redirect::to('crudimages');
 	    }
 	}
 
